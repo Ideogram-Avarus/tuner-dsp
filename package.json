@@ -2,6 +2,7 @@
   "name": "tuner",
   "version": "1.0.0",
   "main": "index.ts",
+  "react-native": "index.ts",
   "scripts": {
     "start": "react-native start",
     "test": "jest",
@@ -26,11 +27,6 @@
     "ios": {
       "componentDescriptors": [],
       "podspecPath": "./ios/mytuner.podspec"
-    }
-  },
-  "react-native": {
-    "android": {
-      "cmakeListsPath": "android/CMakeLists.txt"
     }
   },
   "dependencies": {}
