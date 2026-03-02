@@ -8,6 +8,7 @@ add_library(
     tuner
     SHARED
     ../shared/NativeModule.cpp
+    ../shared/NativeModule_JNI.cpp
     ../shared/src/pitch_detector.cpp
     ../shared/src/tuner_engine.cpp
 )

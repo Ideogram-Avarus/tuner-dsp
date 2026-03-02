@@ -18,7 +18,6 @@ public class NativeTunerModule extends NativeTunerSpec {
 
   public NativeTunerModule(ReactApplicationContext reactContext) {
     super(reactContext);
-    // Default sample rate; you can make this configurable if needed.
     nativeHandle = initNative(44100);
   }
 
@@ -52,11 +51,8 @@ public class NativeTunerModule extends NativeTunerSpec {
 
   // JNI bridge
   private static native long initNative(int sampleRate);
-
   private static native void processFrameNative(long handle, float[] frame);
-
   private static native WritableMap getLatestResultNative(long handle);
-
   private static native void destroyNative(long handle);
 }
 

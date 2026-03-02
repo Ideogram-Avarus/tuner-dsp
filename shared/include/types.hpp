@@ -2,7 +2,8 @@
 
 
 
-    
+
+
     
 struct TunerResult {
     bool hasPitch;
@@ -11,7 +12,8 @@ struct TunerResult {
     int midiNote;          // 45
     double amplitude;      // signal level
 };
-
-
+    
+    
+  
 
 

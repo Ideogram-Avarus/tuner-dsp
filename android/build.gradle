@@ -11,10 +11,8 @@ android {
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
 
-    externalNativeBuild {
-      cmake {
-        
-      }
+    ndk {
+      abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
     }
   }
 
