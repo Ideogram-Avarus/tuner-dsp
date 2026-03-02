@@ -9,7 +9,7 @@ module.exports = {
         sourceDir: './android',
       },
       ios: {
-        pdspecPath: './ios/mytuner.podspec',
+        podspecPath: './ios/mytuner.podspec',
       },
     },
   },

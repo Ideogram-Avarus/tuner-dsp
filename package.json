@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "react-native": "index.ts",
+  "app.plugin.js": "./app.plugin.js", 
   "scripts": {
     "start": "react-native start",
     "test": "jest",
