@@ -6,9 +6,13 @@ module.exports = {
   dependency: {
     platforms: {
       android: {
-        cmakeListsPath: './android/CMakeLists.txt',
+        sourceDir: './android',
+        cmakeListsPath: 'import com.mytuner.TunerPackage;',
+        packageInstance: 'new TunerPackage()'
       },
-      ios: {},
+      ios: {
+        pdspecPath: './ios/mytuner.podspec',
+      },
     },
   },
 };

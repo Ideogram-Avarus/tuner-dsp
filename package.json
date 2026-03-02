@@ -17,11 +17,11 @@
     "@react-native-community/cli": "latest"
   },
   "codegenConfig": {
-    "name": "tuner",
+    "name": "TunerEngine",
     "type": "modules",
     "jsSrcsDir": "specs",
     "android": {
-      "javaPackageName": "com.mytuner.specs"
+      "javaPackageName": "com.mytuner"
     },
     "ios": {
       "componentDescriptors": [],
