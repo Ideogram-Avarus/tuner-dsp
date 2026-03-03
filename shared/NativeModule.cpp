@@ -1,8 +1,13 @@
-#include "NativeModule.hpp"
+#include "NativeModule.h"
 
 #include <jni.h>
 
 namespace facebook::react {
+
+
+NativeModule::NativeModule(std::shared_ptr<CallInvoker> jsInvoker)
+    : NativeMyModuleCxxSpec(std::move(jsInvoker)) {}
+
 
 NativeTuner::NativeTuner(int sampleRate)
     : engine_(sampleRate) {}
