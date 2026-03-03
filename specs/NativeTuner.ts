@@ -14,6 +14,6 @@ export interface Spec extends TurboModule {
   getLatestResult(): TunerResult;
 }
 
-const NativeTuner = TurboModuleRegistry.getEnforcing<Spec>('TunerEngine');
+const NativeTuner = TurboModuleRegistry.getEnforcing<Spec>('NativeTuner');
 
 export default NativeTuner;

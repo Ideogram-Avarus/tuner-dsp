@@ -2,20 +2,20 @@
 
 #include <jni.h>
 
-namespace tuner_native {
+namespace facebook::react {
 
-NativeModule::NativeModule(int sampleRate)
+NativeTuner::NativeTuner(int sampleRate)
     : engine_(sampleRate) {}
 
-void NativeModule::processFrame(const float* samples, int size) {
+void NativeTuner::processFrame(const float* samples, int size) {
   engine_.processFrame(samples, size);
 }
 
-TunerResult NativeModule::getLatestResult() const {
+TunerResult NativeTuner::getLatestResult() const {
   return engine_.getLatestResult();
 }
 
-void NativeModule::reset() {
+void NativeTuner::reset() {
   engine_.reset();
 }
 
