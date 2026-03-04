@@ -5,7 +5,7 @@ project(tuner)
 set(CMAKE_CXX_STANDARD 20)
 
 add_library(
-    native_tuner_dsp
+    tuner
     SHARED
     ../shared/NativeTunerDsp.cpp
     ../shared/NativeTunerDspJSI.cpp
@@ -21,4 +21,4 @@ target_include_directories(
 
 find_library(log-lib log)
 
-target_link_libraries(native_tuner_dsp log)
+target_link_libraries(tuner log)
