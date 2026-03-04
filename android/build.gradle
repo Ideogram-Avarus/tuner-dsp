@@ -29,14 +29,14 @@ android {
   defaultConfig {
       minSdkVersion safeExtGet('minSdkVersion', 21)
       targetSdkVersion safeExtGet('targetSdkVersion', 34)
-  }
-
-  externalNativeBuild {
-      cmake {
-          path "CMakeLists.txt"
-          arguments "-DANDROID_STL=c++_shared"
+      externalNativeBuild {
+          cmake {
+              path "CMakeLists.txt"
+              arguments "-DANDROID_STL=c++_shared"
+          }
       }
   }
+
   
   buildTypes {
       release {
