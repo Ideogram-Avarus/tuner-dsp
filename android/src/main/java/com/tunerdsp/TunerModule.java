@@ -1,12 +1,11 @@
 package com.tunerdsp;
 
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.turbomodule.core.interfaces.TurboModule;
-import com.facebook.react.turbomodule.core.interfaces.TurboModuleRegistry;
-import com.facebook.react.turbomodule.core.interfaces.TurboModuleRegistryDelegate;
+import androidx.annotation.NonNull;
 
-
-public class TunerModule extends TurboModule {
+public class TunerModule extends ReactContextBaseJavaModule implements TurboModule {
     static {
         System.loadLibrary("tunerdsp"); // loads libtunerdsp.so
     }
