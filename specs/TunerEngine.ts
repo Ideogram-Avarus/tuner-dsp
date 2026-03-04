@@ -13,4 +13,8 @@ export class TunerEngine {
     static processFrame(buffer: number[]): void {
         NativeTuner.processFrame(buffer);
     }
+
+    static init(sampleRate: number | undefined): void {
+        NativeTuner.init(sampleRate);
+    }
 }

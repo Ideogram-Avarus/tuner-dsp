@@ -11,7 +11,7 @@ public class TunerModule extends ReactContextBaseJavaModule implements TurboModu
     private boolean engineCreated = false;
 
     static {
-        System.loadLibrary("tunerdsp"); // loads libtunerdsp.so
+        System.loadLibrary("tuner"); // loads libtunerdsp.so
     }
 
     public TunerModule(ReactApplicationContext context) {

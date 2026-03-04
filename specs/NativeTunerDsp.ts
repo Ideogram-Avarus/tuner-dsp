@@ -12,7 +12,7 @@ export interface TunerResult {
 export interface Spec extends TurboModule {
   processFrame(buffer: number[]): void;
   getLatestResult(): TunerResult;
-  init(sampleRate: number): void;
+  init(sampleRate: number | undefined): void;
 }
 
 const NativeTuner = TurboModuleRegistry.getEnforcing<Spec>('TunerDsp');
