@@ -6,6 +6,9 @@ import com.facebook.react.turbomodule.core.interfaces.TurboModule;
 import androidx.annotation.NonNull;
 
 public class TunerModule extends ReactContextBaseJavaModule implements TurboModule {
+
+    public static final String NAME = "TunerDsp";
+
     static {
         System.loadLibrary("tunerdsp"); // loads libtunerdsp.so
     }
