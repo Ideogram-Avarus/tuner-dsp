@@ -7,15 +7,15 @@ set(CMAKE_CXX_STANDARD 20)
 add_library(
     native_tuner_dsp
     SHARED
-    ../../../../shared/NativeTunerDsp.cpp
-    ../../../../shared/NativeTunerDspJSI.cpp
+    ../shared/NativeTunerDsp.cpp
+    ../shared/NativeTunerDspJSI.cpp
 )
 
 target_include_directories(
     tuner
     PRIVATE
-    ../../../../shared
-    ../../../../shared/include
+    ../shared
+    ../shared/include
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
