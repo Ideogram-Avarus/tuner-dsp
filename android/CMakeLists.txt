@@ -19,6 +19,6 @@ target_include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-find_package(ReactAndroid REQUIRED CONFIG)
+find_library(log-lib log)
 
 target_link_libraries(native_tuner_dsp log)
