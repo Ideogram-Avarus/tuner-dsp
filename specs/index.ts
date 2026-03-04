@@ -1,3 +1,5 @@
 
 
-export * from './NativeTuner';
+
+export { TunerEngine } from './TunerEngine';
+export type { TunerResult } from './NativeTunerDsp';

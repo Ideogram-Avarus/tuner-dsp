@@ -1,13 +1,10 @@
 {
   "name": "tuner",
   "version": "1.0.0",
-  "main": "index.ts",
-  "react-native": "index.ts",
-  "app.plugin.js": "./app.plugin.js", 
+  "main": "lib/index.ts",
+  "react-native": "lib/index.ts",
   "scripts": {
-    "start": "react-native start",
-    "test": "jest",
-    "codegen": "react-native codegen || exit 0"
+    "commit": "git add . && git commit -m \"test\" && git push"
   },
   "peerDependencies": {
     "react": "*",
@@ -18,19 +15,5 @@
     "typescript": "~5.9.2",
     "@react-native-community/cli": "latest"
   },
-  "codegenConfig": {
-    "name": "TunerEngine",
-    "type": "modules",
-    "jsSrcsDir": "specs",
-    "android": {
-      "javaPackageName": "com.mytuner"
-    },
-    "ios": {
-      "componentDescriptors": [],
-      "podspecPath": "./ios/mytuner.podspec"
-    }
-  },
-  
-  
   "dependencies": {}
 }
