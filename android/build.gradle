@@ -31,9 +31,15 @@ android {
       targetSdkVersion safeExtGet('targetSdkVersion', 34)
       externalNativeBuild {
           cmake {
-              path "CMakeLists.txt"
+              cppFlags ""
               arguments "-DANDROID_STL=c++_shared"
           }
+      }
+  }
+
+  externalNativeBuild {
+      cmake {
+          path "CMakeLists.txt"
       }
   }
 
