@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 public class TunerModule extends ReactContextBaseJavaModule implements TurboModule {
 
     public static final String NAME = "TunerDsp";
+    private boolean engineCreated = false;
 
     static {
         System.loadLibrary("tunerdsp"); // loads libtunerdsp.so
@@ -15,7 +16,6 @@ public class TunerModule extends ReactContextBaseJavaModule implements TurboModu
 
     public TunerModule(ReactApplicationContext context) {
         super(context);
-        createEngine(44100); // example sample rate
     }
 
     @Override
@@ -29,17 +29,24 @@ public class TunerModule extends ReactContextBaseJavaModule implements TurboModu
         return NAME;
     }
 
-    // -----------------------
-    // JNI wrapper methods
-    // -----------------------
-    private native void createEngine(int sampleRate);
-    private native void destroyEngine();
-    private native void cxxProcessFrame(float[] samples);
-    private native float cxxGetLatestResult();
-
+    
     // -----------------------
     // JS-facing methods
     // -----------------------
+    public void init() {
+        if (!engineCreated) {
+            init(44100);
+            engineCreated = true;
+        }
+    }
+
+    public void init(int sampleRate) {
+        if (!engineCreated) {
+            createEngine(sampleRate);
+            engineCreated = true;
+        }
+    }
+
     public float getLatestResult() {
         return cxxGetLatestResult();
     }
@@ -47,4 +54,16 @@ public class TunerModule extends ReactContextBaseJavaModule implements TurboModu
     public void processFrame(float[] samples) {
         cxxProcessFrame(samples);
     }
+    
+
+    // -----------------------
+    // JNI wrapper methods
+    // -----------------------
+    private native void createEngine(int sampleRate);
+    private native void destroyEngine();
+    private native void cxxProcessFrame(float[] samples);
+    private native float cxxGetLatestResult();
+    private native void cxxReset();
+
+
 }

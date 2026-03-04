@@ -5,7 +5,7 @@
 class NativeTunerDsp {
 public:
     explicit NativeTunerDsp(int sampleRate);
-
+    
     void cxxProcessFrame(const float* samples, int size);
     TunerResult cxxGetLatestResult() const;
     void cxxReset();
