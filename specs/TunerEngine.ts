@@ -7,14 +7,27 @@ import type { TunerResult } from './NativeTunerDsp';
 
 
 export class TunerEngine {
-    static getLatestResult(): TunerResult {
-        return NativeTuner.getLatestResult();
-    }
-    static processFrame(buffer: number[]): void {
-        NativeTuner.processFrame(buffer);
+    private Tuner: typeof NativeTuner;
+    private _sampleRate: number | undefined;
+
+    constructor(sampleRate?: number) {
+        this.Tuner = NativeTuner;
+        this._sampleRate = sampleRate;
     }
 
-    static init(sampleRate: number | undefined): void {
-        NativeTuner.init(sampleRate);
+    public getLatestResult(): TunerResult {
+        return this.Tuner.getLatestResult();
+    }
+
+    public processFrame(buffer: number[]): void {
+        this.Tuner.processFrame(buffer);
+    }
+    
+    public init(): void {
+        this.Tuner.init(this._sampleRate);
+    }
+
+    get sampleRate(): number | undefined {
+        return this._sampleRate;
     }
 }
