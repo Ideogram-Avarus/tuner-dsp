@@ -1,7 +1,4 @@
-
-import { TurboModuleRegistry } from 'react-native';
-import type { Spec } from './NativeTunerDsp';
-
+import NativeTuner from './NativeTunerDsp';
 
 export interface TunerResult {
   hasPitch: boolean;
@@ -15,20 +12,16 @@ type RawTunerResult = [number, number, number, number, number];
 
 
 export class TunerEngine {
-    private Tuner: Spec | undefined | null;
+    private Tuner: typeof NativeTuner;
     private _sampleRate: number | undefined;
 
     constructor(sampleRate?: number) {
         this._sampleRate = sampleRate;
+        this.Tuner = NativeTuner;
     }
 
-    public getNativeTuner(): void {
-        this.Tuner = TurboModuleRegistry.get<Spec>('TunerDsp');
-    }
 
     public getLatestResult(): TunerResult {
-        if (!this.Tuner) throw new Error('No tuner');
-
         const result = this.Tuner.getLatestResult();
         if (result.length !== 5) throw new Error('Invalid result');
         const typed = result as RawTunerResult;
@@ -43,14 +36,10 @@ export class TunerEngine {
     }
 
     public processFrame(buffer: number[]): void {
-        if (!this.Tuner) throw new Error('No tuner');
-
         this.Tuner.processFrame(buffer);
     }
     
     public init(): void {
-        if (!this.Tuner) throw new Error('No tuner');
-
         this.Tuner.init(this._sampleRate);
     }
 

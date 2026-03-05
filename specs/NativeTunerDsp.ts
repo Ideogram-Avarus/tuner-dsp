@@ -10,4 +10,6 @@ export interface Spec extends TurboModule {
 }
 
 
+const NativeTuner = TurboModuleRegistry.getEnforcing<Spec>('TunerDsp');
 
+export default NativeTuner;
