@@ -74,4 +74,11 @@ public class TunerModule extends ReactContextBaseJavaModule implements TurboModu
     private native void cxxReset();
 
 
+
+
+    @Override
+    public Map<String, Object> getConstants() {
+    // Expose if needed
+    return new HashMap<>();
+    }
 }

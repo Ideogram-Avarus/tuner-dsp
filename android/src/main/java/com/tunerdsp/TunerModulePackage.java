@@ -33,8 +33,7 @@ public class TunerModulePackage extends TurboReactPackage {
                     TunerModule.NAME,               // JS-visible name
                     TunerModule.class.getName(),    // Full Java class name (with package)
                     false,                          // canOverrideExistingModule
-                    false,                          // needsEagerInit
-                    false,                          // hasConstants? (change if you add getConstants())
+                    true,                          // needsEagerInit
                     false,                          // isCxxModule
                     true                            // isTurboModule = true
                 )
