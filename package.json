@@ -2,7 +2,12 @@
   "name": "tuner",
   "version": "1.0.0",
   "main": "index.ts",
-  "react-native": "index.ts",
+  "react-native": {
+    "android": {
+      "sourceDir": "./android",          
+      "cmakeListsPath": "./android/CMakeLists.txt"  
+    }
+  },
   "scripts": {
     "commit": "git add . && git commit -m \"test\" && git push"
   },
@@ -16,7 +21,7 @@
     "@react-native-community/cli": "latest"
   },
   "codegenConfig": {
-    "name": "TunerDsp",
+    "name": "TunerDspSpecs",
     "type": "modules",
     "jsSrcsDir": "specs",
     "android": {
