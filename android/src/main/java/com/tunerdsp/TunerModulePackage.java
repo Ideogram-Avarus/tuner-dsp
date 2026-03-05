@@ -21,23 +21,23 @@ public class TunerModulePackage extends TurboReactPackage {
         return null;
     }
 
-    // @Override
-    // public ReactModuleInfoProvider getReactModuleInfoProvider() {
-    //     return () -> {
-    //         Map<String, ReactModuleInfo> map = new HashMap<>();
-    //         map.put(
-    //             TunerModule.NAME,
-    //             new ReactModuleInfo(
-    //                 TunerModule.NAME,               // JS-visible name
-    //                 TunerModule.class.getName(),    // Full Java class name (with package)
-    //                 false,                          // canOverrideExistingModule
-    //                 false,                          // needsEagerInit
-    //                 false,                          // hasConstants? (change if you add getConstants())
-    //                 false,                          // isCxxModule
-    //                 true                            // isTurboModule = true
-    //             )
-    //         );
-    //         return map;
-    //     };
-    // }
+    @Override
+    public ReactModuleInfoProvider getReactModuleInfoProvider() {
+        return () -> {
+            Map<String, ReactModuleInfo> map = new HashMap<>();
+            map.put(
+                TunerModule.NAME,
+                new ReactModuleInfo(
+                    TunerModule.NAME,               // JS-visible name
+                    TunerModule.class.getName(),    // Full Java class name (with package)
+                    false,                          // canOverrideExistingModule
+                    false,                          // needsEagerInit
+                    false,                          // hasConstants? (change if you add getConstants())
+                    false,                          // isCxxModule
+                    true                            // isTurboModule = true
+                )
+            );
+            return map;
+        };
+    }
 }
