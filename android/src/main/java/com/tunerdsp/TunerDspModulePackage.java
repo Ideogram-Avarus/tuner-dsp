@@ -11,14 +11,14 @@ import com.facebook.react.module.model.ReactModuleInfoProvider;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TunerModulePackage extends TurboReactPackage {
+public class TunerDspModulePackage extends TurboReactPackage {
 
     @Override
     public @Nullable NativeModule getModule(String name, ReactApplicationContext context) {
         android.util.Log.d("TunerDebug", "getModule called with name: " + name);
-        if (name.equals(TunerModule.NAME)) {
+        if (name.equals(TunerDspModule.NAME)) {
             android.util.Log.d("TunerDebug", "Instantiating TunerDsp TurboModule");
-            return new TunerModule(context);
+            return new TunerDspModule(context);
         }
         return null;
     }
@@ -28,10 +28,10 @@ public class TunerModulePackage extends TurboReactPackage {
         return () -> {
             Map<String, ReactModuleInfo> map = new HashMap<>();
             map.put(
-                TunerModule.NAME,
+                TunerDspModule.NAME,
                 new ReactModuleInfo(
-                    TunerModule.NAME,               // JS-visible name
-                    TunerModule.class.getName(),    // Full Java class name (with package)
+                    TunerDspModule.NAME,               // JS-visible name
+                    TunerDspModule.class.getName(),    // Full Java class name (with package)
                     false,                          // canOverrideExistingModule
                     true,                          // needsEagerInit
                     false,                          // isCxxModule

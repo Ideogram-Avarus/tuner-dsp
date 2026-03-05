@@ -34,10 +34,10 @@ android {
       minSdkVersion safeExtGet('minSdkVersion', 21)
       targetSdkVersion safeExtGet('targetSdkVersion', 34)
       externalNativeBuild {
-          cmake {
-              cppFlags ""
-              arguments "-DANDROID_STL=c++_shared"
-          }
+          // cmake {
+          //     cppFlags ""
+          //     arguments "-DANDROID_STL=c++_shared"
+          // }
       }
   }
 

@@ -5,7 +5,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.turbomodule.core.interfaces.TurboModule;
 import androidx.annotation.NonNull;
 
-public class TunerModule extends ReactContextBaseJavaModule implements TurboModule {
+public class TunerDspModule extends ReactContextBaseJavaModule implements TurboModule {
 
     public static final String NAME = "TunerDsp";
     private boolean engineCreated = false;
@@ -14,7 +14,7 @@ public class TunerModule extends ReactContextBaseJavaModule implements TurboModu
         System.loadLibrary("tuner"); // loads libtunerdsp.so
     }
 
-    public TunerModule(ReactApplicationContext context) {
+    public TunerDspModule(ReactApplicationContext context) {
         super(context);
     }
 

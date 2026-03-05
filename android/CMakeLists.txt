@@ -15,7 +15,7 @@ add_library(
     
 target_include_directories(
     tuner
-    PRIVATE
+    SHARED
     ../shared/include
 )
 
