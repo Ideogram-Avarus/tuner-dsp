@@ -3,6 +3,7 @@ package com.tunerdsp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -50,16 +51,32 @@ public class TunerDspModule extends NativeTunerDspSpec implements TurboModule {
     }
 
     @Override
-    @ReactMethod(isBlockingSynchronousMethod = true)
-    public WritableArray getLatestResult() {
-        return cxxGetLatestResult();
-    }
-
-    @Override
     @ReactMethod
-    public void processFrame(float[] samples) {
+    @DoNotStrip
+    public void processFrame(ReadableArray buffer) {
+        if (buffer == null) {
+            return;
+        }
+        float[] samples = new float[buffer.size()];
+        for (int i = 0; i < buffer.size(); i++) {
+            samples[i] = (float) buffer.getDouble(i);  // Convert JS number to float
+        }
         cxxProcessFrame(samples);
     }
+
+
+    @Override
+    @ReactMethod(isBlockingSynchronousMethod = true)
+    @DoNotStrip
+    public WritableArray getLatestResult() {
+        double[] raw = cxxGetLatestResult();
+        WritableArray result = Arguments.createArray();
+        for (double val : raw) {
+            result.pushDouble(val);
+        }
+        return result;
+    }
+
 
     @Override
     @ReactMethod
