@@ -2,9 +2,6 @@
 
 
 
-
-
-    
 struct TunerResult {
     bool hasPitch;
     double frequency;      // 110.2 Hz

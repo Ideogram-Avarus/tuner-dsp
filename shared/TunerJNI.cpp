@@ -22,7 +22,7 @@ Java_com_example_myapp_NativeTuner_destroyEngine(JNIEnv* env, jobject thiz) {
 
 // Process frame
 JNIEXPORT void JNICALL
-Java_com_example_myapp_NativeTuner_processFrame(JNIEnv* env, jobject thiz, jfloatArray samples) {
+Java_com_example_myapp_NativeTuner_cxxProcessFrame(JNIEnv* env, jobject thiz, jfloatArray samples) {
     if (!gEngine) return;
 
     jsize len = env->GetArrayLength(samples);
@@ -34,16 +34,30 @@ Java_com_example_myapp_NativeTuner_processFrame(JNIEnv* env, jobject thiz, jfloa
 }
 
 // Get latest result
-JNIEXPORT jfloat JNICALL
-Java_com_example_myapp_NativeTuner_getLatestResult(JNIEnv* env, jobject thiz) {
-    if (!gEngine) return 0.0f;
+JNIEXPORT jdoubleArray JNICALL
+Java_com_example_myapp_NativeTuner_cxxGetLatestResult(JNIEnv* env, jobject thiz) {
+    if (!gEngine) return nullptr;
+
     TunerResult res = gEngine->cxxGetLatestResult();
-    return res.value; // adjust depending on your TunerResult struct
+
+    jdoubleArray arr = env->NewDoubleArray(5);
+    if (!arr) return nullptr;
+
+    jdouble tmp[5] = {
+        res.hasPitch ? 1.0 : 0.0,
+        res.frequency,
+        res.cents,
+        (double)res.midiNote,
+        res.amplitude
+    };
+
+    env->SetDoubleArrayRegion(arr, 0, 5, tmp);
+    return arr;
 }
 
 // Reset engine
 JNIEXPORT void JNICALL
-Java_com_example_myapp_NativeTuner_reset(JNIEnv* env, jobject thiz) {
+Java_com_example_myapp_NativeTuner_cxxReset(JNIEnv* env, jobject thiz) {
     if (!gEngine) return;
     gEngine->cxxReset();
 }

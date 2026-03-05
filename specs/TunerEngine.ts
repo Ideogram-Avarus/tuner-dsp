@@ -1,8 +1,14 @@
 
 import NativeTuner from './NativeTunerDsp';
-import type { TunerResult } from './NativeTunerDsp';
 
 
+export interface TunerResult {
+  hasPitch: boolean;
+  frequency: number;
+  midiNote: number;
+  cents: number;
+  amplitude: number;
+}
 
 
 
@@ -16,7 +22,14 @@ export class TunerEngine {
     }
 
     public getLatestResult(): TunerResult {
-        return this.Tuner.getLatestResult();
+        const result = this.Tuner.getLatestResult();
+        return {
+            hasPitch: result[0] === 1.0,
+            frequency: result[1],
+            midiNote: result[3],
+            cents: result[2],
+            amplitude: result[4],
+        }
     }
 
     public processFrame(buffer: number[]): void {

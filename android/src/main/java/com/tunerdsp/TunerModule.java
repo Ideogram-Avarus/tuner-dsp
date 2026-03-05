@@ -47,7 +47,7 @@ public class TunerModule extends ReactContextBaseJavaModule implements TurboModu
         }
     }
 
-    public float getLatestResult() {
+    public double[] getLatestResult() {
         return cxxGetLatestResult();
     }
 
@@ -62,7 +62,7 @@ public class TunerModule extends ReactContextBaseJavaModule implements TurboModu
     private native void createEngine(int sampleRate);
     private native void destroyEngine();
     private native void cxxProcessFrame(float[] samples);
-    private native float cxxGetLatestResult();
+    private native double[] cxxGetLatestResult();
     private native void cxxReset();
 
 

@@ -2,6 +2,6 @@
 
 
 export { TunerEngine } from './TunerEngine';
-export type { TunerResult } from './NativeTunerDsp';
+export type { TunerResult } from './TunerEngine';
 
 
