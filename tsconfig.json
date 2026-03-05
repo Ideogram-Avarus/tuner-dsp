@@ -24,5 +24,5 @@
     "target": "esnext",
     "verbatimModuleSyntax": true,
   },
-  "include": ["*", "specs/**/*.ts"],
+  "include": ["index.ts", "specs/**/*.ts"],
 }
