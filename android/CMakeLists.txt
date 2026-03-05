@@ -4,11 +4,12 @@ project(tuner)
 
 set(CMAKE_CXX_STANDARD 20)
 
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "../shared/*.cpp")
+
 add_library(
     tuner
     SHARED
-    ../shared/NativeTunerDsp.cpp
-    ../shared/TunerJNI.cpp
+    ${SOURCES}
 )
 
 target_include_directories(
@@ -16,7 +17,6 @@ target_include_directories(
     PRIVATE
     ../shared
     ../shared/include
-    ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 find_library(log-lib log)

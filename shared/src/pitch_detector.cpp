@@ -1,4 +1,4 @@
-#include "pitch_detector.hpp"
+#include "pitch_detector.h"
 #include <cmath>
 #include <limits>
 
