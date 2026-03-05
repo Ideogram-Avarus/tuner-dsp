@@ -15,7 +15,9 @@ public class TunerModulePackage extends TurboReactPackage {
 
     @Override
     public @Nullable NativeModule getModule(String name, ReactApplicationContext context) {
+        android.util.Log.d("TunerDebug", "getModule called with name: " + name);
         if (name.equals(TunerModule.NAME)) {
+            android.util.Log.d("TunerDebug", "Instantiating TunerDsp TurboModule");
             return new TunerModule(context);
         }
         return null;
