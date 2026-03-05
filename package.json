@@ -2,7 +2,14 @@
   "name": "tuner",
   "version": "1.0.0",
   "main": "index.ts",
-  "react-native": "index.ts",
+  "react-native": {
+    "android": {
+        "sourceDir": "./android",
+        "cmakeListsPath": "./CMakeLists.txt", 
+        "packageImportPath": "import com.tunerdsp.TunerDspModulePackage;",
+        "packageInstance": "new TunerDspModulePackage()"
+      }
+  },
   "scripts": {
     "commit": "git add . && git commit -m \"test\" && git push"
   },
