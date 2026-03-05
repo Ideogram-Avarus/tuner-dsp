@@ -1,7 +1,9 @@
 #include "NativeTunerDsp.h"
 #include <jni.h>
 
-static NativeTunerDsp* gEngine = nullptr; // single engine
+using namespace native_side;
+
+static NativeTunerDsp* gEngine = nullptr; 
 
 extern "C" {
 

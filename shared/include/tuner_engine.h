@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "pitch_detector.hpp"
-#include "types.hpp"
+#include "pitch_detector.h"
+#include "types.h"
 
 namespace tuner {
 

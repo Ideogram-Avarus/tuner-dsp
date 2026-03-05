@@ -6,16 +6,16 @@ set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "../shared/*.cpp")
 
+
 add_library(
     tuner
     SHARED
     ${SOURCES}
 )
-
+    
 target_include_directories(
     tuner
     PRIVATE
-    ../shared
     ../shared/include
 )
 
