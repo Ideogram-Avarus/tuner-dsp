@@ -7,6 +7,8 @@ export interface Spec extends TurboModule {
   processFrame(buffer: number[]): void;
   getLatestResult(): number[];
   init(sampleRate: number | undefined): void;
+  reset(): void;
+  destroy(): void;
 }
 
 
