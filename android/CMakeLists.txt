@@ -4,7 +4,6 @@ project(tuner)
 
 set(CMAKE_CXX_STANDARD 20)
 
-
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "../shared/*.cpp")
 
 
