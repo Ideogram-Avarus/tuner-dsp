@@ -7,9 +7,9 @@
 namespace tuner {
 
 
-class TunerEngine {
+class CxxTunerEngine {
 public:
-    explicit TunerEngine(int sampleRate);
+    explicit CxxTunerEngine(int sampleRate);
 
     void processFrame(const float* samples, int size);
     TunerResult getLatestResult() const;

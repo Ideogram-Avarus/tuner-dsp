@@ -15,7 +15,7 @@ namespace native_side {
         void cxxReset();
         
         private:
-        tuner::TunerEngine engine_;
+        tuner::CxxTunerEngine engine_;
     };
 
 

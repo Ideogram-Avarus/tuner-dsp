@@ -4,14 +4,14 @@
 
 namespace tuner {
 
-TunerEngine::TunerEngine(int sampleRate)
+CxxTunerEngine::CxxTunerEngine(int sampleRate)
     : sampleRate(sampleRate),
       detector(sampleRate)
 {
     reset();
 }
 
-void TunerEngine::processFrame(const float* samples, int size)
+void CxxTunerEngine::processFrame(const float* samples, int size)
 {
     internalBuffer.insert(
         internalBuffer.end(),
@@ -63,12 +63,12 @@ void TunerEngine::processFrame(const float* samples, int size)
     }
 }
 
-TunerResult TunerEngine::getLatestResult() const
+TunerResult CxxTunerEngine::getLatestResult() const
 {
     return latest;
 }
 
-void TunerEngine::reset()
+void CxxTunerEngine::reset()
 {
     internalBuffer.clear();
 

@@ -1,7 +1,6 @@
 
 import NativeTuner from './NativeTunerDsp';
 
-
 export interface TunerResult {
   hasPitch: boolean;
   frequency: number;
