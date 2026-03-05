@@ -54,7 +54,15 @@ public class TunerModule extends ReactContextBaseJavaModule implements TurboModu
     public void processFrame(float[] samples) {
         cxxProcessFrame(samples);
     }
+
+    public void reset() {
+        cxxReset();
+    }
     
+    public void destroy() {
+        destroyEngine();
+        engineCreated = false;
+    }
 
     // -----------------------
     // JNI wrapper methods
