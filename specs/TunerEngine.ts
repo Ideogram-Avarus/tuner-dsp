@@ -10,6 +10,7 @@ export interface TunerResult {
   amplitude: number;
 }
 
+type RawTunerResult = [number, number, number, number, number];
 
 
 export class TunerEngine {
@@ -23,12 +24,16 @@ export class TunerEngine {
 
     public getLatestResult(): TunerResult {
         const result = this.Tuner.getLatestResult();
+
+        if (result.length !== 5) throw new Error('Invalid result');
+        const typed = result as RawTunerResult;
+        
         return {
-            hasPitch: result[0] === 1.0,
-            frequency: result[1],
-            midiNote: result[3],
-            cents: result[2],
-            amplitude: result[4],
+            hasPitch: typed[0] === 1.0,
+            frequency: typed[1],
+            midiNote: typed[3],
+            cents: typed[2],
+            amplitude: typed[4],
         }
     }
 
