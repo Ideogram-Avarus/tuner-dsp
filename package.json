@@ -15,15 +15,5 @@
     "typescript": "~5.9.2",
     "@react-native-community/cli": "latest"
   },
-  "codegenConfig": {
-    "name": "TunerDsp",
-    "type": "modules",
-    "jsSrcsDir": "specs",
-    "android": {
-      "javaPackageName": "com.tunerdsp"
-    },
-    "ios": {
-    }
-  },
   "dependencies": {}
 }
