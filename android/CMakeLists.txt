@@ -8,7 +8,7 @@ add_library(
     tuner
     SHARED
     ../shared/NativeTunerDsp.cpp
-    ../shared/NativeTunerDspJSI.cpp
+    ../shared/TunerJNI.cpp
 )
 
 target_include_directories(

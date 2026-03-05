@@ -28,7 +28,7 @@ Java_com_example_myapp_NativeTuner_processFrame(JNIEnv* env, jobject thiz, jfloa
     jsize len = env->GetArrayLength(samples);
     jfloat* data = env->GetFloatArrayElements(samples, nullptr);
 
-    gEngine->processFrame(data, len);
+    gEngine->cxxProcessFrame(data, len);
 
     env->ReleaseFloatArrayElements(samples, data, 0);
 }
@@ -37,7 +37,7 @@ Java_com_example_myapp_NativeTuner_processFrame(JNIEnv* env, jobject thiz, jfloa
 JNIEXPORT jfloat JNICALL
 Java_com_example_myapp_NativeTuner_getLatestResult(JNIEnv* env, jobject thiz) {
     if (!gEngine) return 0.0f;
-    TunerResult res = gEngine->getLatestResult();
+    TunerResult res = gEngine->cxxGetLatestResult();
     return res.value; // adjust depending on your TunerResult struct
 }
 
@@ -45,7 +45,7 @@ Java_com_example_myapp_NativeTuner_getLatestResult(JNIEnv* env, jobject thiz) {
 JNIEXPORT void JNICALL
 Java_com_example_myapp_NativeTuner_reset(JNIEnv* env, jobject thiz) {
     if (!gEngine) return;
-    gEngine->reset();
+    gEngine->cxxReset();
 }
 
 } // extern "C"
