@@ -75,10 +75,4 @@ public class TunerModule extends ReactContextBaseJavaModule implements TurboModu
 
 
 
-
-    @Override
-    public Map<String, Object> getConstants() {
-    // Expose if needed
-    return new HashMap<>();
-    }
 }

@@ -9,6 +9,5 @@ export interface Spec extends TurboModule {
   init(sampleRate: number | undefined): void;
 }
 
-const NativeTuner = TurboModuleRegistry.getEnforcing<Spec>('TunerDsp');
 
-export default NativeTuner;
+
