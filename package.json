@@ -16,7 +16,7 @@
     "@react-native-community/cli": "latest"
   },
   "codegenConfig": {
-    "name": "TunerDspSpec",
+    "name": "TunerDsp",
     "type": "modules",
     "jsSrcsDir": "specs",
     "android": {
