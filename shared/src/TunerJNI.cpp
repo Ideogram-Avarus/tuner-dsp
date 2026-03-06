@@ -9,7 +9,7 @@ extern "C" {
 
 // Create engine
 JNIEXPORT void JNICALL
-Java_com_tunerdsp_TunerDspModule_createEngine(JNIEnv* env, jobject thiz, jint sampleRate) {
+Java_com_tunerdsp_TunerJniEngine_cxxCreateEngine(JNIEnv* env, jobject thiz, jint sampleRate) {
     if (!gEngine) {
         gEngine = new NativeTunerDsp(sampleRate);
     }
@@ -17,14 +17,14 @@ Java_com_tunerdsp_TunerDspModule_createEngine(JNIEnv* env, jobject thiz, jint sa
 
 // Destroy engine
 JNIEXPORT void JNICALL
-Java_com_tunerdsp_TunerDspModule_destroyEngine(JNIEnv* env, jobject thiz) {
+Java_com_tunerdsp_TunerJniEngine_cxxDestroyEngine(JNIEnv* env, jobject thiz) {
     delete gEngine;
     gEngine = nullptr;
 }
 
 // Process frame
 JNIEXPORT void JNICALL
-Java_com_tunerdsp_TunerDspModule_cxxProcessFrame(JNIEnv* env, jobject thiz, jfloatArray samples) {
+Java_com_tunerdsp_TunerJniEngine_cxxProcessFrame(JNIEnv* env, jobject thiz, jfloatArray samples) {
     if (!gEngine) return;
 
     jsize len = env->GetArrayLength(samples);
@@ -37,7 +37,7 @@ Java_com_tunerdsp_TunerDspModule_cxxProcessFrame(JNIEnv* env, jobject thiz, jflo
 
 // Get latest result
 JNIEXPORT jdoubleArray JNICALL
-Java_com_tunerdsp_TunerDspModule_cxxGetLatestResult(JNIEnv* env, jobject thiz) {
+Java_com_tunerdsp_TunerJniEngine_cxxGetLatestResult(JNIEnv* env, jobject thiz) {
     if (!gEngine) return nullptr;
 
     TunerResult res = gEngine->cxxGetLatestResult();
@@ -59,7 +59,7 @@ Java_com_tunerdsp_TunerDspModule_cxxGetLatestResult(JNIEnv* env, jobject thiz) {
 
 // Reset engine
 JNIEXPORT void JNICALL
-Java_com_tunerdsp_TunerDspModule_cxxReset(JNIEnv* env, jobject thiz) {
+Java_com_tunerdsp_TunerJniEngine_cxxReset(JNIEnv* env, jobject thiz) {
     if (!gEngine) return;
     gEngine->cxxReset();
 }

@@ -6,25 +6,23 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.ReadableArray;
 
 public class TunerJniEngine {
-    // static {
-    //     System.loadLibrary("tuner");
-    // }
+    static {
+        System.loadLibrary("tuner");
+    }
 
     private boolean engineCreated = false;
-    
-    public void createEngine(int sampleRate) {}
     
     public void init(@Nullable Double sampleRate) {
         int rate = (sampleRate != null) ? sampleRate.intValue() : 44100;
         if (!engineCreated) {
-            //createEngine(rate);
+            cxxCreateEngine(sampleRate);
             engineCreated = true;
         }
     }
     
     public void destroyEngine() {
         if (engineCreated) {
-            //destroyEngine();
+            cxxDestroyEngine();
             engineCreated = false;
         }
     }
@@ -60,14 +58,13 @@ public class TunerJniEngine {
         //cxxReset();
     }
 
-
     // -----------------------
     // Native methods
     // -----------------------
     
-    // private native void createEngine(int sampleRate);
-    // private native void destroyEngine();
-    // private native void cxxProcessFrame(float[] samples);
-    // private native double[] cxxGetLatestResult();
-    // private native void cxxReset();
+    private native void cxxCreateEngine(int sampleRate);
+    private native void cxxDestroyEngine();
+    private native void cxxProcessFrame(float[] samples);
+    private native double[] cxxGetLatestResult();
+    private native void cxxReset();
 }
