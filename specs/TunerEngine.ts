@@ -35,12 +35,16 @@ export class TunerEngine {
         }
     }
 
-    public processFrame(buffer: number[]): void {
+    public processFrame(buffer: string): void {
         this.Tuner.processFrame(buffer);
     }
     
     public init(): void {
         this.Tuner.init(this._sampleRate);
+    }
+
+    public destroy(): void {
+        this.Tuner.destroy();
     }
 
     get sampleRate(): number | undefined {

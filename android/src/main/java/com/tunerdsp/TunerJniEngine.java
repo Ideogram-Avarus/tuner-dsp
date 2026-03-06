@@ -3,15 +3,17 @@ package com.tunerdsp;
 import androidx.annotation.Nullable;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableArray;
-import com.facebook.react.bridge.ReadableArray;
+
+import android.util.Base64;
 
 public class TunerJniEngine {
     static {
         System.loadLibrary("tuner");
     }
-
     private boolean engineCreated = false;
-    
+    private float[] sampleBuffer = null;
+    private static final float INT16_TO_FLOAT = 1.0f / 32768.0f;
+
     public void init(@Nullable Double sampleRate) {
         int rate = (sampleRate != null) ? sampleRate.intValue() : 44100;
         if (!engineCreated) {
@@ -27,15 +29,24 @@ public class TunerJniEngine {
         }
     }
     
-    public void processFrame(ReadableArray buffer) {
-        if (buffer == null) {
-            return;
+    public void processFrame(String buffer) {
+        if (buffer == null) return;
+
+        byte[] bytes = Base64.decode(buffer, Base64.DEFAULT);
+        int len = bytes.length / 2;
+
+        if (sampleBuffer == null || sampleBuffer.length != len) {
+            sampleBuffer = new float[len];
         }
-        float[] samples = new float[buffer.size()];
-        for (int i = 0; i < buffer.size(); i++) {
-            samples[i] = (float) buffer.getDouble(i);  // Convert JS number to float
+
+        for (int i = 0; i < len; i++) {
+            int lo = bytes[i * 2] & 0xff;
+            int hi = bytes[i * 2 + 1] << 8;
+            short s = (short)(hi | lo);
+            sampleBuffer[i] = s * INT16_TO_FLOAT;
         }
-        cxxProcessFrame(samples);
+
+        cxxProcessFrame(sampleBuffer);
     }
 
     public WritableArray getLatestResult() {
@@ -45,13 +56,6 @@ public class TunerJniEngine {
             result.pushDouble(val);
         }
         return result;
-        // WritableArray arr = Arguments.createArray();
-        // arr.pushDouble(1);
-        // arr.pushDouble(2);
-        // arr.pushDouble(3);
-        // arr.pushDouble(4);
-        // arr.pushDouble(5);
-        // return arr;
     }
 
     public void reset() {

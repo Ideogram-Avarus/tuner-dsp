@@ -43,7 +43,7 @@ public class TunerDspModule extends NativeTunerDspSpec {
     @Override
     @ReactMethod
     @DoNotStrip
-    public void processFrame(ReadableArray buffer) {
+    public void processFrame(String buffer) {
         engine.processFrame(buffer);
     }
 

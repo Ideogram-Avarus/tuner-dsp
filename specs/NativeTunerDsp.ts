@@ -4,7 +4,7 @@ import { TurboModuleRegistry } from 'react-native';
 
 
 export interface Spec extends TurboModule {
-  processFrame(buffer: number[]): void;
+  processFrame(buffer: string): void;
   getLatestResult(): number[];
   init(sampleRate: number | undefined): void;
   reset(): void;
