@@ -1,6 +1,7 @@
 package com.tunerdsp;
 
 import androidx.annotation.Nullable;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.ReadableArray;
 
