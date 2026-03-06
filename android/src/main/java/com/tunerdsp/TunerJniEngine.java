@@ -11,7 +11,7 @@ public class TunerJniEngine {
 
     private boolean engineCreated = false;
     
-    public void create(int sampleRate) {}
+    public void createEngine(int sampleRate) {}
     
     public void init(@Nullable Double sampleRate) {
         int rate = (sampleRate != null) ? sampleRate.intValue() : 44100;
@@ -21,7 +21,7 @@ public class TunerJniEngine {
         }
     }
     
-    public void destroy() {
+    public void destroyEngine() {
         if (engineCreated) {
             //destroyEngine();
             engineCreated = false;

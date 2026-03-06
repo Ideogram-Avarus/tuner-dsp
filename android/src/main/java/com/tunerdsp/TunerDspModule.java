@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.facebook.proguard.annotations.DoNotStrip;
-import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -14,7 +13,6 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.turbomodule.core.interfaces.TurboModule;
 
 
-@ReactModule(name = TunerDspModule.NAME)
 public class TunerDspModule extends NativeTunerDspSpec {
 
     public static final String NAME = "TunerDsp";
@@ -34,7 +32,7 @@ public class TunerDspModule extends NativeTunerDspSpec {
     // -----------------------
     // JS-facing methods
     // -----------------------
-    
+
     @Override
     @ReactMethod
     @DoNotStrip
