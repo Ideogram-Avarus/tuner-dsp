@@ -15,7 +15,7 @@ public class TunerJniEngine {
     public void init(@Nullable Double sampleRate) {
         int rate = (sampleRate != null) ? sampleRate.intValue() : 44100;
         if (!engineCreated) {
-            cxxCreateEngine(sampleRate);
+            cxxCreateEngine(rate);
             engineCreated = true;
         }
     }
