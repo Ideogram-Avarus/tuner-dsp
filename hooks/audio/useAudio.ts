@@ -1,4 +1,4 @@
-import { useEffect, } from "react";
+import { useEffect } from "react";
 import AudioRecord from "react-native-audio-record";
 import { AUDIO_RECORDER_CONFIG } from "../constants";
 
