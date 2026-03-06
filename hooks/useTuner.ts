@@ -38,6 +38,7 @@ export const useTuner = (sampleRate: SampleRate = SAMPLE_RATE) => {
         start,
         stop,
         result,
+        hasPermission,
         requestMicPermission,
     }
 }
