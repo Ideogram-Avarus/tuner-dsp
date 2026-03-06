@@ -27,35 +27,35 @@ public class TunerJniEngine {
         }
     }
     
-    public void processFrame(ReadableArray samples) {
-        // if (buffer == null) {
-        //     return;
-        // }
-        // float[] samples = new float[buffer.size()];
-        // for (int i = 0; i < buffer.size(); i++) {
-        //     samples[i] = (float) buffer.getDouble(i);  // Convert JS number to float
-        // }
-        // cxxProcessFrame(samples);
+    public void processFrame(ReadableArray buffer) {
+        if (buffer == null) {
+            return;
+        }
+        float[] samples = new float[buffer.size()];
+        for (int i = 0; i < buffer.size(); i++) {
+            samples[i] = (float) buffer.getDouble(i);  // Convert JS number to float
+        }
+        cxxProcessFrame(samples);
     }
 
     public WritableArray getLatestResult() {
-        // double[] raw = cxxGetLatestResult();
-        // WritableArray result = Arguments.createArray();
-        // for (double val : raw) {
-        //     result.pushDouble(val);
-        // }
-        // return result;
-        WritableArray arr = Arguments.createArray();
-        arr.pushDouble(1);
-        arr.pushDouble(2);
-        arr.pushDouble(3);
-        arr.pushDouble(4);
-        arr.pushDouble(5);
-        return arr;
+        double[] raw = cxxGetLatestResult();
+        WritableArray result = Arguments.createArray();
+        for (double val : raw) {
+            result.pushDouble(val);
+        }
+        return result;
+        // WritableArray arr = Arguments.createArray();
+        // arr.pushDouble(1);
+        // arr.pushDouble(2);
+        // arr.pushDouble(3);
+        // arr.pushDouble(4);
+        // arr.pushDouble(5);
+        // return arr;
     }
 
     public void reset() {
-        //cxxReset();
+        cxxReset();
     }
 
     // -----------------------
