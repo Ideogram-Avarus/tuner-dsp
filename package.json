@@ -32,5 +32,7 @@
     "ios": {
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "react-native-audio-record": "^0.2.2"
+  }
 }

@@ -2,6 +2,10 @@
   "compilerOptions": {
     "composite": true,
     "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["*"]
+    },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "esModuleInterop": true,
@@ -24,5 +28,6 @@
     "target": "esnext",
     "verbatimModuleSyntax": true,
   },
-  "include": ["index.ts", "specs/**/*.ts"],
+
+  "include": ["index.ts", "specs/**/*.ts", "hooks/**/*.ts"],
 }
