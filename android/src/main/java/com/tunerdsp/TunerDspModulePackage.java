@@ -33,7 +33,7 @@ public class TunerDspModulePackage extends TurboReactPackage {
                     TunerDspModule.NAME,               // JS-visible name
                     TunerDspModule.class.getName(),    // Full Java class name (with package)
                     false,                          // canOverrideExistingModule
-                    true,                          // needsEagerInit
+                    true,                           // needsEagerInit
                     false,                          // isCxxModule
                     true                            // isTurboModule = true
                 )
