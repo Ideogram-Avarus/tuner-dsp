@@ -1,22 +1,12 @@
 import NativeTuner from './NativeTunerDsp';
-
-export interface TunerResult {
-  hasPitch: boolean;
-  frequency: number;
-  midiNote: number;
-  cents: number;
-  amplitude: number;
-}
-
-type RawTunerResult = [number, number, number, number, number];
-
+import type { TunerConfigSpecs, TunerResult } from './types';
 
 export class TunerEngine {
     private Tuner: typeof NativeTuner;
-    private _sampleRate: number | undefined;
+    public config: TunerConfigSpecs;
 
-    constructor(sampleRate?: number) {
-        this._sampleRate = sampleRate;
+    constructor(config: TunerConfigSpecs) {
+        this.config = config;
         this.Tuner = NativeTuner;
     }
 
@@ -24,7 +14,7 @@ export class TunerEngine {
     public getLatestResult(): TunerResult {
         const result = this.Tuner.getLatestResult();
         if (result.length !== 5) throw new Error('Invalid result');
-        const typed = result as RawTunerResult;
+        const typed = result as [number, number, number, number, number, number];
         
         return {
             hasPitch: typed[0] === 1.0,
@@ -40,14 +30,10 @@ export class TunerEngine {
     }
     
     public init(): void {
-        this.Tuner.init(this._sampleRate);
+        this.Tuner.init(this.config);
     }
 
     public destroy(): void {
         this.Tuner.destroy();
-    }
-
-    get sampleRate(): number | undefined {
-        return this._sampleRate;
     }
 }

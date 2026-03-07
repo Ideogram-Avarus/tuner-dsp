@@ -9,10 +9,52 @@ extern "C" {
 
 // Create engine
 JNIEXPORT void JNICALL
-Java_com_tunerdsp_TunerJniEngine_cxxCreateEngine(JNIEnv* env, jobject thiz, jint sampleRate) {
-    if (!gEngine) {
-        gEngine = new NativeTunerDsp(sampleRate);
-    }
+Java_com_tunerdsp_TunerJniEngine_cxxCreateEngine(
+    JNIEnv* env, 
+    jobject thiz,
+    jint sampleRate,
+    jint windowSize,
+    jint hopSize,
+
+    jdouble minFrequency,
+    jdouble maxFrequency,
+
+    jdouble yinThreshold,
+    jdouble minConfidence,
+
+    jdouble minRMS,
+    jdouble smoothingFactor,
+
+    jdouble noteHysteresisCents,
+
+    jboolean enableInterpolation,
+    jboolean enableHarmonicCorrection,
+    jboolean removeDC
+) {
+    if (gEngine) return;
+    
+    TunerConfig config;
+
+    config.sampleRate = sampleRate;
+    config.windowSize = windowSize;
+    config.hopSize = hopSize;
+
+    config.minFrequency = minFrequency;
+    config.maxFrequency = maxFrequency;
+
+    config.yinThreshold = yinThreshold;
+    config.minConfidence = minConfidence;
+
+    config.minRMS = minRMS;
+    config.smoothingFactor = smoothingFactor;
+
+    config.noteHysteresisCents = noteHysteresisCents;
+
+    config.enableInterpolation = enableInterpolation;
+    config.enableHarmonicCorrection = enableHarmonicCorrection;
+    config.removeDC = removeDC;
+
+    gEngine = new NativeTunerDsp(config);
 }
 
 // Destroy engine

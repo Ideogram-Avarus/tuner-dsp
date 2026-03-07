@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useRef } from "react";
 import { TunerEngine } from "../../specs";
 import type { TunerResult } from "../../specs";
-import type { SampleRate } from "../types";
 
-export const TunerProcessor = (sampleRate: SampleRate) => {
+export const TunerProcessor = (sampleRate: Number) => {
     const engineRef = useRef<any | null>(null);
 
     useEffect(() => {

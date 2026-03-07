@@ -4,7 +4,9 @@ project(tuner)
 
 set(CMAKE_CXX_STANDARD 20)
 
-file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "../shared/*.cpp")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS 
+    "../shared/*.cpp"
+)
 
 
 add_library(
@@ -16,7 +18,7 @@ add_library(
 target_include_directories(
     tuner
     PUBLIC
-    ../shared/include
+    ../shared
 )
 
 find_library(log-lib log)

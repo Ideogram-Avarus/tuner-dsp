@@ -15,7 +15,8 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-audio-record": "*"
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
@@ -33,6 +34,6 @@
     }
   },
   "dependencies": {
-    "react-native-audio-record": "^0.2.2"
+    
   }
 }

@@ -5,8 +5,8 @@
 namespace native_side {
 
     
-NativeTunerDsp::NativeTunerDsp(int sampleRate)
-    : engine_(sampleRate) {}
+NativeTunerDsp::NativeTunerDsp(TunerConfig config)
+    : engine_(config) {}
     
     void NativeTunerDsp::cxxProcessFrame(const float* samples, int size) {
         engine_.processFrame(samples, size);

@@ -1,11 +1,12 @@
 import { useTunerResults } from "./tuner/useTunerResults";
-import type { SampleRate } from "./types";
+import type { TunerConfig } from "./types";
 import { TunerProcessor } from "./tuner/TunerProcessor";
 import { useAudio, usePermissions } from "./audio";
-import { SAMPLE_RATE } from "./constants";
+import { AUDIO_RECORDER_CONFIG } from "./constants";
 
-
-export const useTuner = (sampleRate: SampleRate = SAMPLE_RATE) => {
+export const useTuner = (
+    config: TunerConfig = AUDIO_RECORDER_CONFIG
+) => {
     const {
         requestMicPermission,
         hasPermission
@@ -15,13 +16,14 @@ export const useTuner = (sampleRate: SampleRate = SAMPLE_RATE) => {
         processFrame,
         getLatestResult
     } = TunerProcessor(
-        sampleRate
+        config.sampleRate
     )
 
     const {
         start,
         stop
     } = useAudio(
+        config,
         hasPermission,
         requestMicPermission, 
         processFrame
