@@ -1,10 +1,12 @@
+import type { TunerConfigSpecs } from "../specs"
+import type { AudioRecorderConfig } from "./types"
 
 
 
 
 export const SAMPLE_RATE = 44100
 
-export const AUDIO_RECORDER_CONFIG = {
+export const AUDIO_RECORDER_CONFIG: AudioRecorderConfig = {
     sampleRate: SAMPLE_RATE,
     channels: 1,
     bitsPerSample: 16,
@@ -12,8 +14,8 @@ export const AUDIO_RECORDER_CONFIG = {
     wavFile: "ignore.wav",
 }
 
-
-export const NATIVE_TUNER_CONFIG = {
+export const NATIVE_TUNER_CONFIG: TunerConfigSpecs = {
+  sampleRate: SAMPLE_RATE,
   windowSize: 4096,
   hopSize: 512,
   minFrequency: 70,
@@ -26,5 +28,4 @@ export const NATIVE_TUNER_CONFIG = {
   enableInterpolation: true,
   enableHarmonicCorrection: true,
   removeDC: true,
-  windowType: "hann"
 }
