@@ -15,7 +15,7 @@ public class TunerJniEngine {
     private float[] sampleBuffer = null;
     private static final float INT16_TO_FLOAT = 1.0f / 32768.0f;
 
-    public void init(@Nullable ReadableMap config) {
+    public void init(ReadableMap config) {
         if (engineCreated) return;
         int sampleRate = config.getInt("sampleRate");
         int windowSize = config.getInt("windowSize");

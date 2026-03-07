@@ -3,7 +3,6 @@
 
 #include "window.h"
 #include <cmath>
-#include <numbers>
 
 namespace tuner::dsp
 {

@@ -37,7 +37,7 @@ public class TunerDspModule extends NativeTunerDspSpec {
     @Override
     @ReactMethod
     @DoNotStrip
-    public void init(@Nullable ReadableMap config) {
+    public void init(ReadableMap config) {
         engine.init(config);
     }
 
