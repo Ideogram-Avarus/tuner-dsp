@@ -8,25 +8,4 @@ export interface TunerResult {
   amplitude: number;
 }
 
-export type TunerConfigSpecs = {
-    sampleRate: number,
-
-    windowSize: number,
-    hopSize: number,
-    
-    minFrequency: number,
-    maxFrequency: number,
-
-    yinThreshold: number,
-    minConfidence: number,
-
-    minRMS: number,
-    smoothingFactor: number,
-
-    noteHysteresisCents: number,
-
-    enableInterpolation: boolean,
-    enableHarmonicCorrection: boolean,
-
-    removeDC: boolean
-}
+export type { TunerConfigSpecs } from './NativeTunerDsp';

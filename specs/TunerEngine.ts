@@ -1,5 +1,6 @@
 import NativeTuner from './NativeTunerDsp';
-import type { TunerConfigSpecs, TunerResult } from './types';
+import type { TunerResult } from './types';
+import type { TunerConfigSpecs } from './NativeTunerDsp';
 
 export class TunerEngine {
     private Tuner: typeof NativeTuner;
