@@ -66,7 +66,7 @@ public class TunerJniEngine {
         for (int i = 0; i < length; i++) {
             sampleBuffer[i] = buffer[i] * INT16_TO_FLOAT;
         }
-        cxxProcessFrame(sampleBuffer, length);
+        cxxProcessFrame(sampleBuffer);
     }
 
     public WritableArray getLatestResult() {
