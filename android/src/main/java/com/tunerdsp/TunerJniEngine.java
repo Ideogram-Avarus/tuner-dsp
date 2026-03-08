@@ -1,11 +1,8 @@
 package com.tunerdsp;
 
-import androidx.annotation.Nullable;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.ReadableMap;
-
-import android.util.Base64;
 
 public class TunerJniEngine {
     static {
@@ -15,9 +12,9 @@ public class TunerJniEngine {
     private float[] sampleBuffer = null;
     private static final float INT16_TO_FLOAT = 1.0f / 32768.0f;
 
-    public void init(ReadableMap config) {
+    public void init(ReadableMap config, int sampleRate) {
         if (engineCreated) return;
-        int sampleRate = config.getInt("sampleRate");
+
         int windowSize = config.getInt("windowSize");
         int hopSize = config.getInt("hopSize");
 
@@ -51,6 +48,7 @@ public class TunerJniEngine {
             enableHarmonicCorrection,
             removeDC
         );
+
         engineCreated = true;
     }
 
@@ -61,25 +59,14 @@ public class TunerJniEngine {
         }
     }
 
-    public void processFrame(String buffer) {
-        if (buffer == null)
-            return;
-
-        byte[] bytes = Base64.decode(buffer, Base64.DEFAULT);
-        int len = bytes.length / 2;
-
-        if (sampleBuffer == null || sampleBuffer.length != len) {
-            sampleBuffer = new float[len];
+    public void processFrame(short[] buffer, int length) {
+        if (sampleBuffer == null || sampleBuffer.length < length) {
+            sampleBuffer = new float[length];
         }
-
-        for (int i = 0; i < len; i++) {
-            int lo = bytes[i * 2] & 0xff;
-            int hi = bytes[i * 2 + 1] << 8;
-            short s = (short) (hi | lo);
-            sampleBuffer[i] = s * INT16_TO_FLOAT;
+        for (int i = 0; i < length; i++) {
+            sampleBuffer[i] = buffer[i] * INT16_TO_FLOAT;
         }
-
-        cxxProcessFrame(sampleBuffer);
+        cxxProcessFrame(sampleBuffer, length);
     }
 
     public WritableArray getLatestResult() {

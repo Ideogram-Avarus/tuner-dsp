@@ -6,6 +6,7 @@ export interface TunerResult {
   midiNote: number;
   cents: number;
   amplitude: number;
+  confidence: number;
 }
 
 export type { TunerConfigSpecs } from './NativeTunerDsp';

@@ -1,13 +1,9 @@
+import type { TunerConfigSpecs } from "../specs"
 
 
 
 
-
-
-export type AudioRecorderConfig = {
-    sampleRate: number
-    channels: number
-    bitsPerSample: number
-    audioSource: number
-    wavFile: string
+export type TunerEngineConfig = {
+    engineConfig: TunerConfigSpecs,
+    startAtPermission: boolean
 }

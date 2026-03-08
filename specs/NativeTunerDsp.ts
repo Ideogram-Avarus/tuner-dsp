@@ -3,34 +3,32 @@ import { TurboModuleRegistry } from 'react-native';
 
 
 export type TunerConfigSpecs = {
-    sampleRate: number,
 
-    windowSize: number,
-    hopSize: number,
-    
-    minFrequency: number,
-    maxFrequency: number,
+  windowSize: number
+  hopSize: number
 
-    yinThreshold: number,
-    minConfidence: number,
+  minFrequency: number
+  maxFrequency: number
 
-    minRMS: number,
-    smoothingFactor: number,
+  yinThreshold: number
+  minConfidence: number
 
-    noteHysteresisCents: number,
+  minRMS: number
+  smoothingFactor: number
 
-    enableInterpolation: boolean,
-    enableHarmonicCorrection: boolean,
+  noteHysteresisCents: number
 
-    removeDC: boolean
+  enableInterpolation: boolean
+  enableHarmonicCorrection: boolean
+
+  removeDC: boolean
 }
 
 export interface Spec extends TurboModule {
-  processFrame(buffer: string): void;
   getLatestResult(): number[];
-  init(
-    config: TunerConfigSpecs
-  ): void;
+  init(config: TunerConfigSpecs): void;
+  start(): void;
+  stop(): void;
   reset(): void;
   destroy(): void;
 }

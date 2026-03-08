@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { TunerResult } from "@/specs";
+import type { TunerResult } from "../../specs";
 
 export const useTunerResults = (
     getLatestResult: () => TunerResult | null,

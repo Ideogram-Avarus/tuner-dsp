@@ -5,12 +5,12 @@ import type { TunerConfigSpecs } from './NativeTunerDsp';
 export class TunerEngine {
     private Tuner: typeof NativeTuner;
     public config: TunerConfigSpecs;
+    public isRunning: boolean = false;
 
     constructor(config: TunerConfigSpecs) {
         this.config = config;
         this.Tuner = NativeTuner;
     }
-
 
     public getLatestResult(): TunerResult {
         const result = this.Tuner.getLatestResult();
@@ -23,11 +23,18 @@ export class TunerEngine {
             midiNote: typed[3],
             cents: typed[2],
             amplitude: typed[4],
+            confidence: typed[5]
         }
     }
 
-    public processFrame(buffer: string): void {
-        this.Tuner.processFrame(buffer);
+    public start(): void {
+        this.Tuner.start();
+        this.isRunning = true;
+    }
+
+    public stop(): void {
+        this.Tuner.stop();
+        this.isRunning = false;
     }
     
     public init(): void {

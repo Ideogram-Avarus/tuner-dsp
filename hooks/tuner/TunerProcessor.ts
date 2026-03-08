@@ -3,7 +3,22 @@ import { TunerEngine } from "../../specs";
 import type { TunerConfigSpecs, TunerResult } from "../../specs";
 
 export const TunerProcessor = (config: TunerConfigSpecs) => {
-    const engineRef = useRef<any | null>(null);
+    const engineRef = useRef<TunerEngine | null>(null);
+
+    const getLatestResult = useCallback((): TunerResult | null => {
+        if (!engineRef.current) return null;
+        return engineRef.current.getLatestResult();
+    }, []);
+
+    const start = useCallback(() => {
+        if (!engineRef.current) return;
+        engineRef.current.start();
+    }, []);
+
+    const stop = useCallback(() => {
+        if (!engineRef.current) return;
+        engineRef.current.stop();
+    }, []);
 
     useEffect(() => {
         if (!TunerEngine) {
@@ -15,22 +30,15 @@ export const TunerProcessor = (config: TunerConfigSpecs) => {
         console.log("TunerEngine Created");
         console.log(engineRef.current);
         return () => {
+            if (!engineRef.current) return;
             engineRef.current.destroy();
             engineRef.current = null;
         };
     }, [config]);
 
-    const processFrame = useCallback((data: string) => {
-        engineRef.current.processFrame(data);
-    }, [engineRef.current, config]);
-
-    const getLatestResult = useCallback((): TunerResult | null => {
-        return engineRef.current.getLatestResult();
-    }, []);
-
     return {
-        engineRef,
-        processFrame,
+        start,
+        stop,
         getLatestResult
     };
 };

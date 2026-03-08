@@ -4,24 +4,23 @@
   "main": "index.ts",
   "react-native": {
     "android": {
-        "sourceDir": "./android",
-        "cmakeListsPath": "./CMakeLists.txt", 
-        "packageImportPath": "import com.tunerdsp.TunerDspModulePackage;",
-        "packageInstance": "new TunerDspModulePackage()"
-      }
+      "sourceDir": "./android",
+      "cmakeListsPath": "./CMakeLists.txt",
+      "packageImportPath": "import com.tunerdsp.TunerDspModulePackage;",
+      "packageInstance": "new TunerDspModulePackage()"
+    }
   },
   "scripts": {
     "commit": "git add . && git commit -m \"test\" && git push"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*",
-    "react-native-audio-record": "*"
+    "react-native": "*"
   },
   "devDependencies": {
+    "@react-native-community/cli": "latest",
     "@types/react": "~19.1.0",
-    "typescript": "~5.9.2",
-    "@react-native-community/cli": "latest"
+    "typescript": "~5.9.2"
   },
   "codegenConfig": {
     "name": "TunerDspSpecs",
@@ -30,10 +29,6 @@
     "android": {
       "javaPackageName": "com.tunerdsp"
     },
-    "ios": {
-    }
-  },
-  "dependencies": {
-    
+    "ios": {}
   }
 }
