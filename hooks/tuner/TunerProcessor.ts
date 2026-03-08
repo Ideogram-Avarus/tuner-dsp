@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { TunerEngine } from "../../specs";
 import type { TunerConfigSpecs, TunerResult } from "../../specs";
 
 export const TunerProcessor = (config: TunerConfigSpecs) => {
     const engineRef = useRef<TunerEngine | null>(null);
+    const [isRunning, setIsRunning] = useState(false);
 
     const getLatestResult = useCallback((): TunerResult | null => {
         if (!engineRef.current) return null;
@@ -13,11 +14,13 @@ export const TunerProcessor = (config: TunerConfigSpecs) => {
     const start = useCallback(() => {
         if (!engineRef.current) return;
         engineRef.current.start();
+        setIsRunning(true);
     }, []);
 
     const stop = useCallback(() => {
         if (!engineRef.current) return;
         engineRef.current.stop();
+        setIsRunning(false);
     }, []);
 
     useEffect(() => {
@@ -39,6 +42,8 @@ export const TunerProcessor = (config: TunerConfigSpecs) => {
     return {
         start,
         stop,
+        engineRef,
+        isRunning,
         getLatestResult
     };
 };

@@ -15,6 +15,7 @@ export const useTuner = (
     const {
         start,
         stop,
+        isRunning,
         getLatestResult
     } = TunerProcessor(
         config.engineConfig
@@ -28,6 +29,7 @@ export const useTuner = (
     );
 
     return {
+        isRunning,
         start,
         stop,
         result,
