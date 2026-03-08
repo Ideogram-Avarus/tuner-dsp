@@ -11,10 +11,19 @@ export const useTunerResults = (
     useEffect(() => {
         const id = setInterval(() => {
             const next = getLatestResult();
+            if (next === null) return;
 
+            if (!next.hasPitch) {
+                setResult(prev => {
+                    if (!prev) return { ...next, hasPitch: false };
+                    return { ...prev, hasPitch: false };
+                });
+                return
+            }
+            
             if (next !== lastResultRef.current) {
-                lastResultRef.current = next;
-                setResult(next);
+                    lastResultRef.current = next;
+                    setResult(next);
             }
         }, interval);
 
