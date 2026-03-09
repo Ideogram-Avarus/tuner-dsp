@@ -17,22 +17,31 @@ namespace tuner
         reset();
     }
 
-    void CxxTunerEngine::reset()
+    void CxxTunerEngine::setLatest(const TunerResult& result)
     {
-        internalBuffer.clear();
-
-        latest.hasPitch = false;
-        latest.frequency = 0.0;
-        latest.midiNote = 0;
-        latest.cents = 0.0;
-        latest.amplitude = 0.0;
-        latest.confidence = 0.0;
+        std::lock_guard<std::mutex> lock(latestMutex);
+        latest = result;
     }
 
     TunerResult CxxTunerEngine::getLatestResult() const
     {
+        std::lock_guard<std::mutex> lock(latestMutex);
         return latest;
     }
+
+    void CxxTunerEngine::reset()
+    {
+        internalBuffer.clear();
+        dcFilter.reset();
+        detector.reset();
+        smoother.reset();
+        hasStableMidiNote = false;
+
+        TunerResult result{};
+        result.hasPitch = false;
+        setLatest(result);
+    }
+
 
     void CxxTunerEngine::processFrame(const float *samples, int size)
     {
@@ -70,7 +79,10 @@ namespace tuner
 
         if (rms < config.minRMS)
         {
-            latest.hasPitch = false;
+            hasStableMidiNote = false;
+            TunerResult result{};
+            result.hasPitch = false;
+            setLatest(result);
             return;
         }
 
@@ -84,7 +96,10 @@ namespace tuner
 
         if (!pitchResult.valid || pitchResult.confidence < config.minConfidence)
         {
-            latest = {};
+            hasStableMidiNote = false;
+            TunerResult result{};
+            result.hasPitch = false;
+            setLatest(result);
             return;
         }
 
@@ -107,13 +122,45 @@ namespace tuner
 
         // ---------- Note calculation ----------
 
-        int midi = static_cast<int>(std::round(
-            69.0 + 12.0 * std::log2(pitch / 440.0)));
+        auto freqFromMidi = [](int midi)
+        {
+            return 440.0 * std::pow(2.0, (midi - 69) / 12.0);
+        };
 
-        double referenceFreq =
-            440.0 * std::pow(2.0, (midi - 69) / 12.0);
+        auto midiFromFreq = [](double freq)
+        {
+            return static_cast<int>(
+                std::lround(69.0 + 12.0 * std::log2(freq / 440.0)));
+        };
 
-        double cents =
+        if (!hasStableMidiNote)
+        {
+            stableMidiNote = midiFromFreq(pitch);
+            hasStableMidiNote = true;
+        }
+
+        double centsToStable =
+            1200.0 * std::log2(pitch / freqFromMidi(stableMidiNote));
+
+        while (centsToStable > config.noteHysteresisCents)
+        {
+            ++stableMidiNote;
+            centsToStable =
+                1200.0 * std::log2(pitch / freqFromMidi(stableMidiNote));
+        }
+
+        while (centsToStable < -config.noteHysteresisCents)
+        {
+            --stableMidiNote;
+            centsToStable =
+                1200.0 * std::log2(pitch / freqFromMidi(stableMidiNote));
+        }
+
+        const int midi = stableMidiNote;
+
+        const double referenceFreq = freqFromMidi(midi);
+
+        const double cents =
             1200.0 * std::log2(pitch / referenceFreq);
 
         // ---------- Result ----------
@@ -127,7 +174,7 @@ namespace tuner
         result.amplitude = rms;
         result.confidence = pitchResult.confidence;
 
-        latest = result;
+        setLatest(result);
     }
 
 }

@@ -84,18 +84,19 @@ Java_com_tunerdsp_TunerJniEngine_cxxGetLatestResult(JNIEnv* env, jobject thiz) {
 
     TunerResult res = gEngine->cxxGetLatestResult();
 
-    jdoubleArray arr = env->NewDoubleArray(5);
+    jdoubleArray arr = env->NewDoubleArray(6);
     if (!arr) return nullptr;
 
-    jdouble tmp[5] = {
+    jdouble tmp[6] = {
         res.hasPitch ? 1.0 : 0.0,
         res.frequency,
         res.cents,
         (double)res.midiNote,
-        res.amplitude
+        res.amplitude,
+        res.confidence
     };
 
-    env->SetDoubleArrayRegion(arr, 0, 5, tmp);
+    env->SetDoubleArrayRegion(arr, 0, 6, tmp);
     return arr;
 }
 

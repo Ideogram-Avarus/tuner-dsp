@@ -13,21 +13,24 @@ namespace tuner::smoothing
 
     double PitchSmoother::process(double newFreq)
     {
-        static double prev = 0.0;
-
         if (prev == 0.0)
         {
             prev = newFreq;
+            hasPrev = true;
             return newFreq;
         }
 
-        double smoothed =
+        const double smoothed =
             smoothingFactor * newFreq +
             (1.0 - smoothingFactor) * prev;
 
         prev = smoothed;
-
         return smoothed;
+    }
+
+    void PitchSmoother::reset() {
+        prev = 0.0;
+        hasPrev = false;
     }
 
 }

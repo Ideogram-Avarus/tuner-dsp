@@ -14,7 +14,7 @@ export class TunerEngine {
 
     public getLatestResult(): TunerResult {
         const result = this.Tuner.getLatestResult();
-        if (result.length !== 5) throw new Error('Invalid result');
+        if (result.length !== 6) throw new Error('Invalid result');
         const typed = result as [number, number, number, number, number, number];
         
         return {

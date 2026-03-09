@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <mutex>
 
 #include "pitch/yin_detector.h"
 #include "smoothing/pitch_smoother.h"
@@ -21,16 +22,20 @@ namespace tuner
         void processSamples(); //Process samples and update latest
         TunerResult getLatestResult() const;
         void reset();
+        void setLatest(const TunerResult& result);
 
 
     private:
         TunerConfig config;
         TunerResult latest;
 
+        mutable std::mutex latestMutex;
+
+        int stableMidiNote = 0;
+        bool hasStableMidiNote = false;
 
         std::vector<float> internalBuffer;
         std::vector<float> analysisFrame;
-
     
         dsp::DcFilter dcFilter;
         dsp::Window window;

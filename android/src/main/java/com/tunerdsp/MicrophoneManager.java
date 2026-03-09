@@ -11,28 +11,49 @@ public class MicrophoneManager {
     private final int sampleRate;
     private final int channelConfig = AudioFormat.CHANNEL_IN_MONO;
     private final int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
-    
+
     private int bufferSize;
     private AudioRecord recorder;
     private volatile boolean running = false;
 
+    private int chooseSampleRate(Integer preferredRate) {
+        if (preferredRate != null) {
+            int preferredBuffer = AudioRecord.getMinBufferSize(preferredRate, channelConfig, audioFormat);
+            if (preferredBuffer > 0) {
+                return preferredRate;
+            }
+        }
+
+        int[] candidates = new int[] {48000, 44100, 32000, 22050, 16000};
+        for (int sr : candidates) {
+            int bs = AudioRecord.getMinBufferSize(sr, channelConfig, audioFormat);
+            if (bs > 0) return sr;
+        }
+
+        return 48000;
+    }
+
     public MicrophoneManager(Context context) {
         AudioManager audioManager =
             (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-            
-        String rate = audioManager.getProperty(
-            AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE
-        );
-        if (rate != null) {
-            sampleRate = Integer.parseInt(rate);
-        } else {
-            sampleRate = 48000;
+
+        Integer preferredRate = null;
+        if (audioManager != null) {
+            String rate = audioManager.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
+            if (rate != null) {
+                try {
+                    preferredRate = Integer.parseInt(rate);
+                } catch (NumberFormatException ignored) {
+                    preferredRate = null;
+                }
+            }
         }
-        bufferSize = AudioRecord.getMinBufferSize(
-            sampleRate,
-            channelConfig,
-            audioFormat
-        );
+
+        sampleRate = chooseSampleRate(preferredRate);
+        bufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat);
+        if (bufferSize <= 0) {
+            bufferSize = sampleRate / 10; // ~100ms fallback
+        }
     }
 
     private void captureLoop(AudioFrameCallback callback) {
@@ -46,7 +67,7 @@ public class MicrophoneManager {
                 running = false;
                 break;
             }
-            int read = recorder.read(buffer, 0, buffer.length);
+            int read = r.read(buffer, 0, buffer.length);
             if (read > 0 && callback != null) {
                 callback.onAudioFrame(buffer, read);
             }
@@ -85,5 +106,5 @@ public class MicrophoneManager {
     public int getBufferSize() {
         return bufferSize;
     }
-    
+
 }
