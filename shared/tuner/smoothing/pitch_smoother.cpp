@@ -1,5 +1,5 @@
 // Formula: Implements exponential smoothing.
-// y = α * new + (1-α) * prev
+// y = a * new + (1-a) * prev
 
 #include "pitch_smoother.h"
 
@@ -13,7 +13,7 @@ namespace tuner::smoothing
 
     double PitchSmoother::process(double newFreq)
     {
-        if (prev == 0.0)
+        if (!hasPrev)
         {
             prev = newFreq;
             hasPrev = true;
@@ -28,7 +28,8 @@ namespace tuner::smoothing
         return smoothed;
     }
 
-    void PitchSmoother::reset() {
+    void PitchSmoother::reset()
+    {
         prev = 0.0;
         hasPrev = false;
     }

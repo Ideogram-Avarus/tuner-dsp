@@ -66,15 +66,24 @@ public class TunerJniEngine {
         for (int i = 0; i < length; i++) {
             sampleBuffer[i] = buffer[i] * INT16_TO_FLOAT;
         }
-        cxxProcessFrame(sampleBuffer);
+        cxxProcessFrame(sampleBuffer, length);
     }
 
     public WritableArray getLatestResult() {
         double[] raw = cxxGetLatestResult();
         WritableArray result = Arguments.createArray();
+        if (raw == null) {
+            // fallback when engine is unavailable
+            for (int i = 0; i < 6; i++) {
+                result.pushDouble(0);
+            }
+            return result;
+        }
+
         for (double val : raw) {
             result.pushDouble(val);
         }
+        
         return result;
     }
 
@@ -103,7 +112,7 @@ public class TunerJniEngine {
 
     private native void cxxDestroyEngine();
 
-    private native void cxxProcessFrame(float[] samples);
+    private native void cxxProcessFrame(float[] samples, int length);
 
     private native double[] cxxGetLatestResult();
 

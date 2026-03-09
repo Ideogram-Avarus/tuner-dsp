@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <mutex>
+#include <cstddef>
 
 #include "pitch/yin_detector.h"
 #include "smoothing/pitch_smoother.h"
@@ -18,7 +19,7 @@ namespace tuner
     public:
         explicit CxxTunerEngine(TunerConfig config);
 
-        void processFrame(const float* samples, int size); //Acumulate audio buffer, call processSamples when buffer is full 
+        void processFrame(const float* samples, int size); //Acumulate audio buffer, call processSamples when buffer is full
         void processSamples(); //Process samples and update latest
         TunerResult getLatestResult() const;
         void reset();
@@ -35,8 +36,9 @@ namespace tuner
         bool hasStableMidiNote = false;
 
         std::vector<float> internalBuffer;
+        std::size_t bufferStart = 0;
         std::vector<float> analysisFrame;
-    
+
         dsp::DcFilter dcFilter;
         dsp::Window window;
         pitch::YinDetector detector;

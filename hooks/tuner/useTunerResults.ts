@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { TunerResult } from "../../specs";
+import { resultsDifferent } from "./utils";
+
 
 export const useTunerResults = (
     getLatestResult: () => TunerResult | null,
@@ -11,20 +13,21 @@ export const useTunerResults = (
     useEffect(() => {
         const id = setInterval(() => {
             const next = getLatestResult();
-            if (next === null) return;
+            if (!next) return;
 
-            if (!next.hasPitch) {
-                setResult(prev => {
-                    if (!prev) return { ...next, hasPitch: false };
-                    return { ...prev, hasPitch: false };
-                });
-                return
+            const last = lastResultRef.current;
+
+            if (!last) {
+                lastResultRef.current = next;
+                setResult(next);
+                return;
+            }
+
+            if(resultsDifferent(next, last)) {
+                lastResultRef.current = next;
+                setResult(next);
             }
             
-            if (next !== lastResultRef.current) {
-                    lastResultRef.current = next;
-                    setResult(next);
-            }
         }, interval);
 
         return () => clearInterval(id);

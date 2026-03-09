@@ -32,6 +32,7 @@ namespace tuner
     void CxxTunerEngine::reset()
     {
         internalBuffer.clear();
+        bufferStart = 0;
         dcFilter.reset();
         detector.reset();
         smoother.reset();
@@ -45,28 +46,42 @@ namespace tuner
 
     void CxxTunerEngine::processFrame(const float *samples, int size)
     {
+        if (size <= 0)
+            return;
+
         internalBuffer.insert(
             internalBuffer.end(),
             samples,
             samples + size);
 
-        while (internalBuffer.size() >= config.windowSize)
+        while (internalBuffer.size() - bufferStart >= static_cast<std::size_t>(config.windowSize))
         {
             processSamples();
+            bufferStart += static_cast<std::size_t>(config.hopSize);
+        }
 
+        // Compact occasionally to avoid O(n) erase on every hop.
+        // This keeps steady-state processing close to O(1) per frame append.
+        if (bufferStart > 0 &&
+            (bufferStart >= internalBuffer.size() / 2 ||
+             bufferStart >= static_cast<std::size_t>(config.windowSize) * 4))
+        {
             internalBuffer.erase(
-                internalBuffer.begin(),
-                internalBuffer.begin() + config.hopSize);
+                internalBuffer.begin(), 
+                internalBuffer.begin() + bufferStart
+            );
+            bufferStart = 0;
         }
     }
 
     void CxxTunerEngine::processSamples()
     {
+        const std::size_t start = bufferStart;
+
         std::copy(
-            internalBuffer.begin(),
-            internalBuffer.begin() + config.windowSize,
-            analysisFrame.begin()
-        );
+            internalBuffer.begin() + static_cast<std::ptrdiff_t>(start),
+            internalBuffer.begin() + static_cast<std::ptrdiff_t>(start + static_cast<std::size_t>(config.windowSize)),
+            analysisFrame.begin());
 
         // ---------- Preprocessing ----------
 

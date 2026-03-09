@@ -66,14 +66,15 @@ Java_com_tunerdsp_TunerJniEngine_cxxDestroyEngine(JNIEnv* env, jobject thiz) {
 
 // Process frame
 JNIEXPORT void JNICALL
-Java_com_tunerdsp_TunerJniEngine_cxxProcessFrame(JNIEnv* env, jobject thiz, jfloatArray samples) {
+Java_com_tunerdsp_TunerJniEngine_cxxProcessFrame(JNIEnv* env, jobject thiz, jfloatArray samples, jint length) {
     if (!gEngine) return;
 
-    jsize len = env->GetArrayLength(samples);
+    const jsize len = env->GetArrayLength(samples);
+    const jsize safeLen = (length < len) ? length : len;
+    if (safeLen <= 0) return;
+
     jfloat* data = env->GetFloatArrayElements(samples, nullptr);
-
-    gEngine->cxxProcessFrame(data, len);
-
+    gEngine->cxxProcessFrame(data, static_cast<int>(safeLen));
     env->ReleaseFloatArrayElements(samples, data, 0);
 }
 

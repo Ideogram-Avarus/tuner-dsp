@@ -85,12 +85,14 @@ public class TunerDspModule extends NativeTunerDspSpec {
 
     @Override
     public void invalidate() {
+        stop();
         engine.destroyEngine();
     }
     
     @Override
     @ReactMethod
     public void destroy() {
+        stop();
         engine.destroyEngine();
     }
 }
