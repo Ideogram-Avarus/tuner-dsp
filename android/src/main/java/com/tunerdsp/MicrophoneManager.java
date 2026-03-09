@@ -14,7 +14,7 @@ public class MicrophoneManager {
     
     private int bufferSize;
     private AudioRecord recorder;
-    private boolean running = false;
+    private volatile boolean running = false;
 
     public MicrophoneManager(Context context) {
         AudioManager audioManager =
@@ -41,6 +41,11 @@ public class MicrophoneManager {
             android.os.Process.THREAD_PRIORITY_AUDIO
         );
         while (running) {
+            AudioRecord r = recorder;
+            if (r == null) {
+                running = false;
+                break;
+            }
             int read = recorder.read(buffer, 0, buffer.length);
             if (read > 0 && callback != null) {
                 callback.onAudioFrame(buffer, read);
@@ -63,6 +68,7 @@ public class MicrophoneManager {
     }
 
     public void stop() {
+        running = false;
         if (recorder != null) {
             try {
                 recorder.stop();
